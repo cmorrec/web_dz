@@ -1,0 +1,46 @@
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+main > .container {
+    padding-top: 30px;
+}
+  
+.footer {
+    background-color: #f5f5f5;
+}
+  
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+  
+code {
+    font-size: 80%;
+}
+
+.profile {
+    display: flex;
+    margin-right: 50px;
+}
+
+.user-avatar {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+}
+
+.profile-links p{
+    color: white;
+    margin-left: 3px;
+    margin-bottom: 5px;
+}
+
+.settings{
+  text-decoration: underline;
+  color: white;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+

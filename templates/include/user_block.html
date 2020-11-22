@@ -1,0 +1,10 @@
+{% load static %}
+
+<div class="profile" style="margin-left: 70px;">
+    <img class="user-avatar" src="{% static "img/profile.png" %}">
+        <span class="profile-links">
+            <p>{{userName}}</p>
+            <a href="{% url "settings" %}" class="settings">settings</a>
+            <a href="#" class="settings">log out</a>
+        </span>
+</div>

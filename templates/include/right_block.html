@@ -1,0 +1,21 @@
+{% load static %}
+
+<div class="row test">
+  <span class="tags">
+      <h2 class="popular-tag">Popular Tags</h2>
+      <div style="margin-top: 19px;">
+          {% for tag in popularTags %}
+            <p><a href="{% url 'tag' tag %}"> {{ tag }}</a></p>
+          {% endfor %}
+      </div>
+  </span>
+</div>
+
+
+<br>
+<h2 class="best-members">Best members</h2>
+<ul class="list-unstyled">
+    {% for member in bestMembers %}
+        <a href="#"><li>{{ member }}</li></a>
+    {% endfor %}
+</ul>

@@ -1,0 +1,42 @@
+{% extends 'include/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+<form>
+    <h1 class="h3 mb-3 font-weight-normal">Log in</h1>
+    <div class="alert alert-danger col-4" role="alert">
+        Sorry, wrong password!
+    </div>
+    <div class="row area-margin-bottom">
+        <div class="col-2">Login </div>
+        <div class="col-4">
+            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
+        </div>
+    </div>
+    <div class="row area-margin-bottom">
+    <div class="col-2">Password </div>
+    <div class="col-4">
+        <input type="password" id="inputPassword" class="form-control" placeholder="********" required>
+    </div>
+    </div>
+    <div class="row area-margin-bottom">
+        <div class="col-2">
+            
+        </div>
+        <div class="col-2">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            
+        </div>
+        <div class="col-3">
+            <a href="{% url 'signup' %}">Create new account</a>
+        </div>
+    </div>
+</form>
+</div>
+{% endblock content %}

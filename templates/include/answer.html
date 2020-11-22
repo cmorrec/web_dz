@@ -1,0 +1,30 @@
+{% load static %}
+<div class="container">
+    <div class="row question-box parent">
+        <div class="col-3">
+            <div class="row">
+                <img class="answer-img" src="{% static "img/profile.png" %}"></img>
+            </div>
+            <div class="row">
+
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="answer-text">{{ answer.text }}</div>
+            </div>
+            <div class="row child question-tags" style="margin-left: -16px;">
+                <div class="col-10" style="margin-left: -16px;">
+                    <input type="checkbox" {% if answer.isCorrect == True %} checked {% endif %}> Correct
+                </div>
+                <div class="col-2">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-danger" style="padding-top: 0px; padding-bottom: 0px;">Dislike</button>
+                        <button type="button" class="btn btn-secondary" style="padding-top: 0px; padding-bottom: 0px;">{{ answer.like.count }}</button>
+                        <button type="button" class="btn btn-success" style="padding-top: 0px; padding-bottom: 0px;">Like</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+.question-box {
+    margin-top: 30px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.question-img {
+    max-width: 150px;
+    max-height: 150px;
+    margin-left: 20px;
+}
+
+.question-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: -16px;
+}
+
+.question-tags {
+    margin-left: -16px;
+}
+
+.area-margin-bottom {
+    margin-bottom: 15px;
+}
+
+.parent{
+	position:relative; /* добавили */
+}
+.child{
+	position:absolute; /* добавили */
+	bottom:0; /* добавили */
+}

@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="col">
+        <a class="navbar-brand" href="{% url '' %}">AskKatnov</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <form class="form-inline" style="margin-left: -150px;">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="
+      width: 500px;">
+    <button href="{% url 'ask' %}" class="btn btn-outline-success my-2 my-sm-0" type="submit">ASK!</button>
+  </form>
+    <div class="col">
+      {% block userblock %}
+      {% if isLogin == False %}
+        {% include 'include/not_login_user_block.html' %}
+      {% endif %}
+      {% if isLogin == True %}
+        {% include 'include/user_block.html' %}
+      {% endif %}
+      {% endblock userblock %}
+    </div>
+  </nav>

@@ -1,0 +1,58 @@
+{% extends 'include/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div>
+<form>
+    <h1 class="h3 mb-3 font-weight-normal">Settings: {{ userName }}</h1>
+    <div class="row area-margin-bottom">
+        <div class="col-2">
+            Login
+        </div>
+        <div class="col-4">
+            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
+        </div>
+    </div>
+    <div class="row area-margin-bottom">
+        <div class="col-2">
+            Email
+        </div>
+        <div class="col-4">
+            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
+        </div>
+    </div>
+    <div class="row area-margin-bottom">
+        <div class="col-2">
+            NickName
+        </div>
+        <div class="col-4">
+            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
+        </div>
+    </div>
+    <div class="row area-margin-bottom">
+        <div class="col-2">
+            Upload avatar
+        </div>
+        <div class="col-4">
+            <div class="row area-margin-bottom">
+                <img src="{% static "img/profile.png" %}"></img>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="file" accept="image/*" required autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-2">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Save!</button>
+        </div>
+    </div>  
+</form>
+</div>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'include/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<legend>Tag : {{ tag }}</legend>
+  {% for question in questions.all %}
+    {% include 'include/question.html' %}
+  {% endfor %}
+
+  {% include 'include/pagination.html' %}
+  
+{% endblock content %}
+            

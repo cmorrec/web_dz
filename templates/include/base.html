@@ -1,0 +1,47 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" class="h-100">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Artem Katnov">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>AskKatnov</title>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+    <link href="{% static "css/sign_in.css" %}" rel="stylesheet">
+    <link href="{% static "css/right_block.css" %}" rel="stylesheet">
+    <link href="{% static "css/question.css" %}" rel="stylesheet">
+    <link href="{% static "css/user_block.css" %}" rel="stylesheet">
+    <link href="{% static "css/answer.css" %}" rel="stylesheet">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+
+    <header>
+        {% include 'include/navbar.html' %}
+        <hr>
+    </header>
+
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-9">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+                <div class="col-3">
+                    {% include 'include/right_block.html' %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static "js/jquery.slim.min.js" %}"></script>
+    <script src="{% static "js/popper.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+  </body>
+</html>

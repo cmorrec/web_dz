@@ -1,0 +1,21 @@
+{% extends 'include/base.html' %}
+
+{% load static %}
+{% load my_filter %}
+
+{% block content %}
+<div class="row">
+  <div class="col">
+  <legend><a href="{% url '' %}">New questions</a></legend>
+  </div>
+  <div class="col">
+    <legend >Hot questions</legend>
+  </div>
+</div>
+  {% for question in questions.all %}
+    {% include 'include/question.html' %}
+  {% endfor %}
+  
+  {% include 'include/pagination.html' %}
+
+{% endblock content %}

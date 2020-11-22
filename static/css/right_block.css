@@ -1,0 +1,42 @@
+ul > .best-members {
+    text-decoration: underline;
+    color: blueviolet;
+}
+
+
+.tags {
+    display: inline;
+    margin-left: 20px;
+}
+.tags p {
+    display: inline-block;
+    font-size: 15px;
+    font-style: italic;
+    color: gray;
+}
+
+.tags p:nth-child(5n-2) {
+    color: red;
+    font-size: 20px;
+
+}
+
+.tags p:nth-child(2n+2) {
+    color: blue;
+    font-size: 20px;
+
+}
+
+.tags p:nth-child(4n) {
+    color: green;
+    font-size: 25px;
+}
+
+.tags p:nth-child(7n) {
+    color: black;
+    font-size: 15px;
+}
+
+.tags p {
+    margin-right: 10px;
+}
