@@ -5,19 +5,19 @@
          <span class="navbar-toggler-icon"></span>
         </button>
     </div>
-    <form class="form-inline" style="margin-left: -150px;">
+    <form class="form-inline" style="margin-left: -150px;" action="{% url 'ask' %}">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="
       width: 500px;">
     <button href="{% url 'ask' %}" class="btn btn-outline-success my-2 my-sm-0" type="submit">ASK!</button>
   </form>
     <div class="col">
       {% block userblock %}
-      {% if isLogin == False %}
-        {% include 'include/not_login_user_block.html' %}
-      {% endif %}
-      {% if isLogin == True %}
-        {% include 'include/user_block.html' %}
-      {% endif %}
+        {% if request.user.is_authenticated %}
+          {% include 'include/user_block.html' %}
+          
+        {% else %}
+          {% include 'include/not_login_user_block.html' %}
+        {% endif %}
       {% endblock userblock %}
     </div>
   </nav>

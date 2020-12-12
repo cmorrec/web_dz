@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     'app',
 ]
 
@@ -132,3 +133,5 @@ STATICFILES_DIRS = [
 ]
 
 AUTH_USER_MODEL = 'app.UserProfile'
+
+LOGIN_URL = '/login/'

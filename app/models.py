@@ -1,21 +1,29 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
 from django.conf import settings
 from django.utils import timezone
 from django.db.models import Sum
 
+class ProfileManager(models.Manager):
+	def get_all_users(self):
+ 		return self.all()
+
+	def get_best_users(self):
+ 		return self.all()[:15]
 
 class UserProfile(AbstractUser):
-    avatar = models.ImageField(upload_to='img/', null=True, blank=True)
-
-    def __str__(self):
-        return self.username
+    avatar = models.ImageField(upload_to='static/img/', default = 'static/img/profile.png', null=True, blank=True, verbose_name='Ава')
+    email = models.EmailField(verbose_name = 'E-mail', default = 'default@def.com', blank = True)
 
     class Meta:
         verbose_name = 'Профиль'
+
+    def __str__(self):
+        return self.username
 
 
 class TagManager(models.Manager):
@@ -91,6 +99,7 @@ class Question(models.Model):
     objects = QuestionManager()
 
     like = GenericRelation(LikeDislike, related_query_name='Question')
+    unique_together = [['like', 'user']]
 
     def __str__(self):
         return self.title
@@ -114,6 +123,7 @@ class Answer(models.Model):
 
     is_correct = models.BooleanField(default=False)
     objects = AnswerManager()
+    unique_together = [['like', 'user']]
 
     def __str__(self):
         return f'Answer text={self.text}'

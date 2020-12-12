@@ -3,8 +3,8 @@
 <div class="profile" style="margin-left: 70px;">
     <img class="user-avatar" src="{% static "img/profile.png" %}">
         <span class="profile-links">
-            <p>{{userName}}</p>
+            <p>{{ request.user.username }}</p>
             <a href="{% url "settings" %}" class="settings">settings</a>
-            <a href="#" class="settings">log out</a>
+            <a href="{% url 'logout' %}?next={{ request.path }}" class="settings">log out</a>
         </span>
 </div>

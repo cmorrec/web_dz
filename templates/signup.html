@@ -1,70 +1,18 @@
 {% extends 'include/base.html' %}
 
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
 <div>
-<form>
-    <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
-    <div class="alert alert-danger col-7" role="alert">
-        Sorry, this email address allready registered!
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            Login
-        </div>
-        <div class="col-4">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            Email
-        </div>
-        <div class="col-4">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            NickName
-        </div>
-        <div class="col-4">
-            <input type="email" id="inputEmail" class="form-control" placeholder="Enter your login here" required autofocus>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            Password
-        </div>
-        <div class="col-4">
-            <input type="password" id="inputPassword" class="form-control" placeholder="********" required>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            Repeat password
-        </div>
-        <div class="col-4">
-            <input type="password" id="inputPassword" class="form-control" placeholder="********" required>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
-            Upload avatar
-        </div>
-        <div class="col">
-            <input type="file" accept="image/*" required autofocus>
-        </div>
-    </div>
-    <div class="row area-margin-bottom">
-        <div class="col-3">
+    <form class="form" method="POST" action="/register/" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form_user %}
+        {% bootstrap_form form_profile %}
 
-        </div>
-        <div class="col-3">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-        </div>
-    </div>      
-</form>
+        {% buttons %}
+            <button type="submit" class="page_btn btn btn-outline-secondary">Sign Up!</button>
+        {% endbuttons %}
+    </form>
 </div>
 {% endblock content %}

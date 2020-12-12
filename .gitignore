@@ -1,6 +1,6 @@
 venv
 node_modules
 .idea
-vscode
+.vscode
 *.pyc
 __pycache__
