@@ -1,6 +1,8 @@
 from django import forms
 from app.models import Question, UserProfile, Answer
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class EditProfileForm(forms.ModelForm):
 	class Meta:
@@ -16,8 +18,6 @@ class CreateUserForm(forms.ModelForm):
 		super().__init__(*args, **kwargs)
 		self.fields['password'].widget = forms.PasswordInput()
 
-	def is_valid(self):
-		return True
 		
 class CreateProfileForm(forms.ModelForm):
 	class Meta:
