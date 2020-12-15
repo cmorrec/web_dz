@@ -1,9 +1,12 @@
 from django.shortcuts import render, reverse, get_object_or_404, redirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.views.decorators.http import require_POST
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
+from django.db import IntegrityError
 from app import models
 from app.forms import *
 from math import ceil
@@ -153,6 +156,13 @@ def questionPage(request, pk):
                 path = reverse('login') + f'?next=/question/{ pk }&anchor=scroll-to-form'
                 return redirect(path)
     ctx = {'question': question, 'answers': answersPage, 'page': page, 'form': form}
+    
+    is_author = False
+    if request.user.is_authenticated == True:
+        if question.author == request.user:
+            is_author = True
+
+    ctx['is_author'] = is_author
     return render(request, 'question_page.html', ctx)
 
 def tagSearch(request, pk):
@@ -184,3 +194,45 @@ def settings(request):
 
     ctx = { 'form': form }
     return render(request, 'settings.html', ctx)
+
+@require_POST
+@login_required
+def vote(request):
+    data = request.POST
+    if (data['like'] == 'question'):
+        like = models.LikeQuestion()
+        content = models.Question.objects.get(pk = data['id'])
+        like.question = content
+    elif (data['like'] == 'answer'):
+        like = models.LikeAnswer()
+        content = models.Answer.objects.get(pk = data['id'])
+        like.answer = content
+
+    like.user = request.user
+    if data['action'] == 'like':
+        like.is_like = True
+    else:
+        like.is_like = False
+
+    try:
+        like.save()
+    except IntegrityError:
+        return JsonResponse({ 'error': 'IntegrityError' })
+
+    return JsonResponse({ 'likes': content.like() })
+
+
+@require_POST
+@login_required
+def correct(request):
+    data = request.POST
+    question = models.Question.objects.get(pk = data['qid'])
+    if question.user == request.user:
+        answer = models.Answer.objects.get(pk = data['aid'])
+        answer.is_correct = not answer.is_correct
+
+        answer.save()
+
+        return JsonResponse({ 'is_correct': answer.is_correct })
+
+    return JsonResponse({ 'error': 'not_author' })

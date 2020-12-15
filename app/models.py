@@ -55,37 +55,42 @@ class QuestionManager(models.Manager):
     def by_tag(self, tag):
         return self.filter(is_active=True, tags__title=tag)
 
-
-class LikeDislikeManager(models.Manager):
-    use_for_related_fields = True
-
-    def likes(self):
-        return self.get_queryset().filter(vote__gt=0)
-
-    def dislikes(self):
-        return self.get_queryset().filter(vote__lt=0)
-
-    def sum_rating(self):
-        return self.get_queryset().aggregate(Sum('vote')).get('vote__sum') or 0
+    def question_by_pk(self, pk):
+        return self.get(pk = pk)
 
 
-class LikeDislike(models.Model):
-    LIKE = 1
-    DISLIKE = -1
+class LikeManager(models.Manager):
+    def likes_user(self, user):
+        self.filter(user = user)
 
-    VOTES = (
-        (DISLIKE, 'Dislike'),
-        (LIKE, 'Like')
-    )
 
-    vote = models.SmallIntegerField(verbose_name="Голос", choices=VOTES)
-    user = models.ForeignKey(UserProfile, verbose_name="Пользователь", on_delete=models.CASCADE)
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
+class LikeQuestion(models.Model):
+    is_like = models.BooleanField(verbose_name='Лайк? (или дизлайк)')
+    data_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
-    objects = LikeDislikeManager()
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    objects = LikeManager()
+
+    class Meta:
+        verbose_name = 'Лайк вопроса'
+        verbose_name_plural = 'Лайки вопросов'
+        unique_together = ['question', 'user']
+
+
+class LikeAnswer(models.Model):
+    is_like = models.BooleanField(verbose_name='Лайк? (или дизлайк)')
+    data_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    answer = models.ForeignKey('Answer', on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Лайк ответа'
+        verbose_name_plural = 'Лайки ответов'
+        unique_together = ['answer', 'user']
 
 
 class Question(models.Model):
@@ -101,7 +106,7 @@ class Question(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     objects = QuestionManager()
 
-    like = GenericRelation(LikeDislike, related_query_name='Question')
+    like = GenericRelation(LikeQuestion, related_query_name='Question')
     unique_together = [['like', 'user']]
 
     def __str__(self):
@@ -109,6 +114,11 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['-create_date']
+
+    def like(self):
+        like = LikeQuestion.objects.filter(question = self, is_like = True).count()
+        dislike = LikeQuestion.objects.filter(question = self, is_like = False).count()
+        return like - dislike
 
 class AnswerManager(models.Manager):
     def best_answered(self):
@@ -119,7 +129,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
-    like = GenericRelation(LikeDislike, related_query_name='Answer')
+    like = GenericRelation(LikeAnswer, related_query_name='Answer')
 
     text = models.TextField(verbose_name='Текст ответа')
     create_date = models.DateTimeField(verbose_name='Дата ответа', default=datetime.now)
@@ -127,6 +137,11 @@ class Answer(models.Model):
     is_correct = models.BooleanField(default=False)
     objects = AnswerManager()
     unique_together = [['like', 'user']]
+
+    def like(self):
+        like = LikeAnswer.objects.filter(answer = self, is_like = True).count()
+        dislike = LikeAnswer.objects.filter(answer = self, is_like = False).count()
+        return like - dislike
 
     def __str__(self):
         return f'Answer text={self.text}'
