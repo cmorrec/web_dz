@@ -16,7 +16,10 @@ class ProfileManager(models.Manager):
  		return self.all()[:15]
 
 class UserProfile(AbstractUser):
-    avatar = models.ImageField(upload_to='static/img/', default = 'static/img/profile.png', null=True, blank=True, verbose_name='Ава')
+    avatar = models.ImageField(upload_to='avatar/%Y/%m/%d/',
+                                default = 'profile.png',
+                                blank = True,
+                                verbose_name='Аватарка')
     email = models.EmailField(verbose_name = 'E-mail', default = 'default@def.com', blank = True)
 
     class Meta:

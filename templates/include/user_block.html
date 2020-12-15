@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="profile" style="margin-left: 70px;">
-    <img class="user-avatar" src="{% static "img/profile.png" %}">
+    <img class="user-avatar" src="{{ request.user.avatar.url }}" class="rounded">
         <span class="profile-links">
             <p>{{ request.user.username }}</p>
             <a href="{% url "settings" %}" class="settings">settings</a>

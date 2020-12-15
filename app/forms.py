@@ -5,9 +5,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class EditProfileForm(forms.ModelForm):
+	avatar = forms.ImageField()
+
 	class Meta:
 		model = UserProfile
 		fields = ['username', 'email', 'avatar']
+
+	def save(self, *args, **kwargs):
+		user = super().save(*args, **kwargs)
+		user.avatar = self.cleaned_data['avatar']
+		user.save()
+		return user
 
 class CreateUserForm(forms.ModelForm):
 	class Meta:

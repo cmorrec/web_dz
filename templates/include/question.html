@@ -3,7 +3,7 @@
   <div class="row question-box">
     <div class="col-3">
       <div class="row">
-        <img class="question-img" src="{% static "img/profile.png" %}"></img>
+        <img class="question-img" src="{{ question.author.avatar.url }}"></img>
       </div>
       <div class="row">
         <div class="btn-group" role="group" aria-label="Basic example">

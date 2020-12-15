@@ -64,9 +64,6 @@ def logout(request):
 
 def login(request):
     redirect_to = request.GET.get('next', '/')
-	#anchor = request.GET.get('anchor')
-	#if anchor is not None:
-	#	redirect_to += '#' + anchor
     error_message = None
     if request.method == 'GET':
         form = LoginForm()
@@ -93,21 +90,21 @@ def register(request):
         form_user = CreateUserForm()
     else:
         data = request.POST
-        profile_data = { 'avatar': data.get('avatar') }
-        user_data = { 'username': data.get('username'), 'email': data.get('email'), 'password': data.get('password') }
-        form_profile = CreateProfileForm(data = profile_data)
-        form_user = CreateUserForm(data = user_data)
-        if form_profile.is_valid() and form_user.is_valid():
-            data = form_user.cleaned_data
+        profileData = { 'avatar': data.get('avatar') }
+        userData = { 'username': data.get('username'), 'email': data.get('email'), 'password': data.get('password') }
+        formProfile = CreateProfileForm(data = profileData)
+        formUser = CreateUserForm(data = userData)
+        if formProfile.is_valid() and formUser.is_valid():
+            data = formUser.cleaned_data
             user = User.objects.create_user(username = data.get('username'), email = data.get('email'), password = data.get('password'))
-            profile = form_profile.save(commit = False)
+            profile = formProfile.save(commit = False)
             profile.user = user
             profile.user_name = data.get('username')
             profile.email = data.get('email')
             profile.save()
             auth.login(request, user)
             return redirect("/")
-    ctx = { 'form_profile': form_profile, 'form_user': form_user }
+    ctx = { 'form_profile': formProfile, 'form_user': formUser }
     return render(request, 'signup.html', ctx)
 
 @login_required
@@ -148,10 +145,10 @@ def questionPage(request, pk):
                 answer.save()
 
                 if paginator.count % OBJECTS_PER_PAGE == 0:
-                    page_number_for_ref = paginator.num_pages + 1
+                    pageNumberForRef = paginator.num_pages + 1
                 else:
-                    page_number_for_ref = paginator.num_pages
-                return redirect(reverse('question', kwargs = {'pk': question.pk}) + f'?page={ page_number_for_ref }#{ answer.id }')
+                    pageNumberForRef = paginator.num_pages
+                return redirect(reverse('question', kwargs = {'pk': question.pk}) + f'?page={ pageNumberForRef }#{ answer.id }')
             else:
                 path = reverse('login') + f'?next=/question/{ pk }&anchor=scroll-to-form'
                 return redirect(path)
@@ -173,8 +170,9 @@ def settings(request):
     if request.method == 'GET':
         form = EditProfileForm(data = { 'username': cur_user.username, 'email': cur_user.email})
     else:
-        form = EditProfileForm(data = request.POST)
+        form = EditProfileForm(data=request.POST, files=request.FILES, instance=request.user)
         if form.is_valid():
+            form.save()
             data = form.cleaned_data
             cur_user.username = data.get('username')
             cur_user.email = data.get('email')

@@ -135,3 +135,6 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'app.UserProfile'
 
 LOGIN_URL = '/login/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+MEDIA_URL = '/uploads/'

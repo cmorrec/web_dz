@@ -3,7 +3,7 @@
     <div class="row ">
       <div class="col-3">
         <div class="row">
-          <img class="question-img" src="{% static "img/profile.png" %}"></img>
+          <img class="question-img" src="{{ question.author.avatar.url }}"></img>
         </div>
       </div>
       <div class="col-9">
