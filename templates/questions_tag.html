@@ -9,6 +9,10 @@
   {% endfor %}
 
   {% include 'include/pagination.html' %}
+
+  {% block jscode %}
+  <script src='{% static "js/votes.js" %}'></script>
+{% endblock %}
   
 {% endblock content %}
             

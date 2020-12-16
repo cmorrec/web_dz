@@ -47,7 +47,7 @@ class Tag(models.Model):
 
 class QuestionManager(models.Manager):
     def best_published(self):
-        return self.order_by('-like')
+        return self.order_by('-likequestion', '-create_date')
 
     def new_published(self):
         return self.order_by('-create_date')
@@ -100,7 +100,7 @@ class Question(models.Model):
     text = models.TextField(verbose_name=u"Полное описание вопроса")
 
     create_date = models.DateTimeField(default=datetime.now, verbose_name=u"Время создания вопроса")
-
+    rating = models.IntegerField(default = 0, blank = True, verbose_name = 'Рейтинг')
     is_active = models.BooleanField(default=True, verbose_name=u"Доступность вопроса")
 
     tags = models.ManyToManyField(Tag, blank=True)
@@ -109,6 +109,9 @@ class Question(models.Model):
     like = GenericRelation(LikeQuestion, related_query_name='Question')
     unique_together = [['like', 'user']]
 
+    def answer(self):
+        return Answer.objects.filter(question = self).count()
+        
     def __str__(self):
         return self.title
 
@@ -117,8 +120,12 @@ class Question(models.Model):
 
     def like(self):
         like = LikeQuestion.objects.filter(question = self, is_like = True).count()
+        print('like', like)
         dislike = LikeQuestion.objects.filter(question = self, is_like = False).count()
         return like - dislike
+
+    def answer(self):
+        return Answer.objects.filter(question = self).count()
 
 class AnswerManager(models.Manager):
     def best_answered(self):

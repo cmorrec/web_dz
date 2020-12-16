@@ -17,20 +17,29 @@ class EditProfileForm(forms.ModelForm):
 		user.save()
 		return user
 
-class CreateUserForm(forms.ModelForm):
-	class Meta:
-		model = User
-		fields = ['username', 'email', 'password']
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['username', 'email']
 
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
-		self.fields['password'].widget = forms.PasswordInput()
+    password = forms.CharField()
+    repeat_password = forms.CharField()
 
-		
-class CreateProfileForm(forms.ModelForm):
-	class Meta:
-		model = UserProfile
-		fields = ['avatar']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].widget = forms.PasswordInput()
+        self.fields['repeat_password'].widget = forms.PasswordInput()
+
+
+    def clean(self):
+        cleaned_data = super(SignUpForm, self).clean()
+        psw = cleaned_data.get('password')
+        repeat_psw = cleaned_data.get('repeat_password')
+
+        if repeat_psw != psw:
+            msg = "Passwords do not match"
+            self.add_error('password', msg)
+            self.add_error('repeat_password', msg)
 
 class LoginForm(forms.Form):
 	username = forms.CharField()

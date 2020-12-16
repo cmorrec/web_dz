@@ -89,26 +89,23 @@ def login(request):
 
 def register(request):
     if request.method == 'GET':
-        form_profile = CreateProfileForm()
-        form_user = CreateUserForm()
+        form = SignUpForm()
     else:
-        data = request.POST
-        profileData = { 'avatar': data.get('avatar') }
-        userData = { 'username': data.get('username'), 'email': data.get('email'), 'password': data.get('password') }
-        formProfile = CreateProfileForm(data = profileData)
-        formUser = CreateUserForm(data = userData)
-        if formProfile.is_valid() and formUser.is_valid():
-            data = formUser.cleaned_data
-            user = User.objects.create_user(username = data.get('username'), email = data.get('email'), password = data.get('password'))
-            profile = formProfile.save(commit = False)
-            profile.user = user
-            profile.user_name = data.get('username')
-            profile.email = data.get('email')
-            profile.save()
-            auth.login(request, user)
-            return redirect("/")
-    ctx = { 'form_profile': formProfile, 'form_user': formUser }
+        form = SignUpForm(data=request.POST)
+        if form.is_valid():
+            user = models.UserProfile.objects.create_user(
+                username = form.cleaned_data.get('username'),
+                email = form.cleaned_data.get('email'),
+                password = form.cleaned_data.get('password'))
+            user.save()
+            if user is not None:
+                auth.login(request, user)
+                return redirect(request.GET.get('next', '/'))
+    ctx = { 'form': form }
     return render(request, 'signup.html', ctx)
+
+
+
 
 @login_required
 def ask(request):

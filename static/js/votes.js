@@ -18,7 +18,10 @@ $('.js-vote').click(function(ev) {
         method: 'POST',
         data: ctx,
     }).done(function(data) {
-        $('#like-rating-' + id).text(data.likes);
+        if (ctx['like'] == 'question')
+            $('#like-question-rating-' + id).text(data.likes);
+        else if (ctx['like'] == 'answer')
+            $('#like-answer-rating-' + id).text(data.likes);
     });
     console.log("HERE " + action + " " + id);
 });

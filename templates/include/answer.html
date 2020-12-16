@@ -21,9 +21,9 @@
                 </div>
                 <div class="col-2">
                     <div class="btn-group box-answer" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-danger" style="padding-top: 0px; padding-bottom: 0px;">Dislike</button>
-                        <button type="button" class="btn btn-secondary" style="padding-top: 0px; padding-bottom: 0px;">{{ answer.like }}</button>
-                        <button type="button" class="btn btn-success" style="padding-top: 0px; padding-bottom: 0px;">Like</button>
+                        <button type="button" class="btn btn-danger js-vote" style="padding-top: 0px; padding-bottom: 0px;" data-action="dislike" data-qid="{{ answer.pk }}">Dislike</button>
+                        <button type="button" class="btn btn-secondary js-rating" style="padding-top: 0px; padding-bottom: 0px;"  id="like-answer-rating-{{ answer.pk }}">{{ answer.like }}</button>
+                        <button type="button" class="btn btn-success js-vote" style="padding-top: 0px; padding-bottom: 0px;" data-action="like" data-qid="{{ answer.pk }}">Like</button>
                     </div>
                 </div>
             </div>

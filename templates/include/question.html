@@ -8,7 +8,7 @@
       <div class="row">
         <div class="btn-group box-qst" role="group" aria-label="Basic example">
           <button type="button" class="btn btn-danger js-vote" style="padding-top: 0px; padding-bottom: 0px;" data-action="dislike" data-qid="{{ question.pk }}">Dislike</button>
-          <button type="button" class="btn btn-secondary js-rating" style="padding-top: 0px; padding-bottom: 0px;">{{ question.like }}</button>
+          <button type="button" class="btn btn-secondary js-rating" style="padding-top: 0px; padding-bottom: 0px;" id="like-question-rating-{{ question.pk }}">{{ question.like }}  </button>
           <button type="button" class="btn btn-success js-vote" style="padding-top: 0px; padding-bottom: 0px;" data-action="like" data-qid="{{ question.pk }}">Like</button>
         </div>
       </div>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="col-2">
-          <a href="{% url 'question' question.id %}">answer({{ question.answersCount }})</a>
+          <a href="{% url 'question' question.id %}">answer({{ question.answer }})</a>
         </div>
       </div>
     </div>

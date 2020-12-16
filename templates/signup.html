@@ -7,8 +7,7 @@
 <div>
     <form class="form" method="POST" action="/register/" novalidate>
         {% csrf_token %}
-        {% bootstrap_form form_user %}
-        {% bootstrap_form form_profile %}
+        {% bootstrap_form form %}
 
         {% buttons %}
             <button type="submit" class="page_btn btn btn-outline-secondary">Sign Up!</button>

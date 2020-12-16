@@ -20,5 +20,9 @@
             <button type="submit" class="page_btn btn btn-outline-secondary">Answer!</button>
         {% endbuttons %}
     </form>
+
+    {% block jscode %}
+        <script src='{% static "js/votes.js" %}'></script>
+    {% endblock jscode %}
 {% endblock content %}
             
